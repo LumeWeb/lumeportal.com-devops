@@ -47,22 +47,16 @@ jobs:
         run: |
           # Get the latest release info
           LATEST_RELEASE=$(curl -s https://api.github.com/repos/appleboy/drone-discord/releases/latest)
+          VERSION=$(echo "$LATEST_RELEASE" | jq -r '.tag_name' | sed 's/^v//')
           
-          # Find the linux-amd64 asset
-          DOWNLOAD_URL=$(echo "$LATEST_RELEASE" | jq -r '.assets[] | select(.name | contains("linux-amd64")) | .browser_download_url')
-          
-          if [ -z "$DOWNLOAD_URL" ]; then
-            echo "Failed to find linux-amd64 asset in latest release"
-            exit 1
-          fi
+          # Construct the URL for the non-compressed Linux AMD64 binary
+          DOWNLOAD_URL="https://github.com/appleboy/drone-discord/releases/download/v${VERSION}/drone-discord-${VERSION}-linux-amd64"
           
           echo "Downloading from: $DOWNLOAD_URL"
           curl -L -o discord-notifier "$DOWNLOAD_URL"
           chmod +x discord-notifier
           
-          # Output the version for debugging
-          VERSION=$(echo "$LATEST_RELEASE" | jq -r '.tag_name')
-          echo "notifier_version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Using notifier version: $VERSION"
         shell: bash
 
       # Send Discord notification for any type of failure
