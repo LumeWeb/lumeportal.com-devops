@@ -79,7 +79,7 @@ jobs:
             There were issues with the Akash top-up process.
             ${{ steps.parse-summary.outputs.system_failure == 'true' && 'System failure occurred.' || format('Failed to fund {0} deployments.', steps.parse-summary.outputs.failed_count) }}
             
-            **Run URL:** ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+            **Run ID:** {{ github.run_id }}
         run: ./discord-notifier
         shell: bash
 
