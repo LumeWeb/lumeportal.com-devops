@@ -63,12 +63,13 @@ jobs:
       - name: Discord Failure Notification
         if: steps.parse-summary.outputs.system_failure == 'true' || steps.parse-summary.outputs.failed_count != '0'
         env:
-          PLUGIN_WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
-          PLUGIN_WEBHOOK_TOKEN: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          PLUGIN_USERNAME: "Akash Monitor Bot"
-          PLUGIN_AVATAR_URL: "https://raw.githubusercontent.com/akash-network/website/master/src/assets/akash-logo-primary.svg"
-          PLUGIN_COLOR: "#FFA500"
-          PLUGIN_MESSAGE: |
+          GITHUB: true
+          WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          WEBHOOK_TOKEN: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          USERNAME: "Akash Monitor Bot"
+          AVATAR_URL: "https://raw.githubusercontent.com/akash-network/website/master/src/assets/akash-logo-primary.svg"
+          COLOR: "#FFA500"
+          DISCORD_MESSAGE: |
             **:warning: Akash Top-up Alert: Issues Detected**
             
             **Deployments Checked:** ${{ steps.akash-topup.outputs.deployments_checked }}
@@ -86,12 +87,13 @@ jobs:
       - name: Discord Success Notification
         if: steps.akash-topup.outputs.deployments_funded != '0'
         env:
-          PLUGIN_WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
-          PLUGIN_WEBHOOK_TOKEN: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
-          PLUGIN_USERNAME: "Akash Monitor Bot"
-          PLUGIN_AVATAR_URL: "https://raw.githubusercontent.com/akash-network/website/master/src/assets/akash-logo-primary.svg"
-          PLUGIN_COLOR: "#00FF00"
-          PLUGIN_MESSAGE: |
+          GITHUB: true
+          WEBHOOK_ID: ${{ secrets.DISCORD_WEBHOOK_ID }}
+          WEBHOOK_TOKEN: ${{ secrets.DISCORD_WEBHOOK_TOKEN }}
+          USERNAME: "Akash Monitor Bot"
+          AVATAR_URL: "https://raw.githubusercontent.com/akash-network/website/master/src/assets/akash-logo-primary.svg"
+          COLOR: "#00FF00"
+          DISCORD_MESSAGE: |
             **:white_check_mark: Akash Deployment Top-up Successful**
             
             **Deployments Checked:** ${{ steps.akash-topup.outputs.deployments_checked }}
